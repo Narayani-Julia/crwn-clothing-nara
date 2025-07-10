@@ -7,11 +7,18 @@ yarn install
 yarn start
 or
 npm install
-
+ 
 # If reaact-scripts not installed correctly:
 rm -rf node_modules && npm install
 
-
+# Git
+git clone <repo>
+cd <repo>
+git checkout <branch>
+git checkout -b <new branch from previous branch>
+git add -A
+git commit -m ""
+git push -u origin <branch>
 # Step 1: remove all the stuff that 
 
 # Removing repo: 
