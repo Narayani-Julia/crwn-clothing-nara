@@ -1,3 +1,22 @@
+# Creating React App
+npx create-react-app <app-name>
+cd <app-name>
+
+# Running site:
+yarn install
+yarn start
+or
+npm install
+
+# If reaact-scripts not installed correctly:
+rm -rf node_modules && npm install
+
+
+# Step 1: remove all the stuff that 
+
+# Removing repo: 
+rm -rf <repo>/ 
+
 # How to fork and clone
 One quick note about cloning this project. If you wish to make commits and push your own code, you'll need to fork the project first. Forking allows you to have your own copy of this repository by adding a duplicate version in your own profile!
 
