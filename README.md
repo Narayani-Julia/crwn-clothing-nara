@@ -5,9 +5,10 @@ cd <app-name>
 # Running site:
 yarn install
 yarn start
-or
+
+or:
 npm install
- 
+
 # If reaact-scripts not installed correctly:
 rm -rf node_modules && npm install
 
@@ -23,6 +24,24 @@ git push -u origin <branch>
 
 # Removing repo: 
 rm -rf <repo>/ 
+
+# Setting up SASS
+yarn add sass
+
+# How to set up routers in React, 
+Version six is actually not backwards compatible.  Know what are the versions you want to use. 
+yarn add react-router-dom@6
+
+# Incorporate Routers:
+import BrowserRouter
+Wrap BrowserRouter around the App
+App should be a directory of all the links
+create a routes folder and store the components that each link returns
+Use Outlet as where the components of each navigation component should be displayed
+Routes Component to define which component is linked to each url
+Link as the buttons to send to each url
+Create route folder for seperation of concerns
+
 
 # How to fork and clone
 One quick note about cloning this project. If you wish to make commits and push your own code, you'll need to fork the project first. Forking allows you to have your own copy of this repository by adding a duplicate version in your own profile!

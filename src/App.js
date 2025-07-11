@@ -1,34 +1,27 @@
+import Home from './routes/home/home.component'
+import Navigation from './routes/navigation/navigation.component'
+//Assembling the routing for the application: 
+import {Routes, Route} from 'react-router-dom'
+import Shop from './routes/shop/shop.component'
 
-import Directory from "./components/directory/directory.component";
-const App = () => {
-  //Initializing variables here
-   const categories = [
-  {
-    id: 1,
-    title: "hats",
-    imageUrl: "https://i.ibb.co/cvpntL1/hats.png"
-  },
-  {
-    id: 2,
-    title: "jackets",
-    imageUrl: "https://i.ibb.co/px2tCc3/jackets.png"
-  },
-  {
-    id: 3,
-    title: "sneakers",
-    imageUrl: "https://i.ibb.co/0jqHpnp/sneakers.png"
-  },
-  {
-    id: 4,
-    title: "womens",
-    imageUrl: "https://i.ibb.co/GCCdy8t/womens.png"
-  },
-  {
-    id: 5,
-    title: "mens",
-    imageUrl: "https://i.ibb.co/R70vBrQ/men.png"
-  }
-];
-  return (<Directory categories = {categories}/>);
-};
+
+const App= () => {
+  return (
+  // extending the browser router properties into the subclasses here
+  <Routes>
+    <Route path= '/' element = {<Navigation />}>
+    {/* Default Page is defined as index elment. It will be displayed under parent component url */}
+    <Route index element={<Home/>}/>
+    {/* the '/' this is the main page*/}
+    {/* nested Route components 
+    - relative children paths
+    - the parent component will render. The child component will not know where to go with respect to the home page. You need to define the child component within the 
+    parent component definition.
+    - need to use an Outlet in order to implement this
+      */}    
+    <Route path='/shop' element = {<Shop/>}/>
+    </Route>
+  </Routes>
+)}
+
 export default App;
