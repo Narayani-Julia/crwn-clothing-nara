@@ -1,6 +1,6 @@
 const Shop = () =>{
     return (
-        <h1>Shpping pageee!</h1>
+        <h1>Shopping pageee!</h1>
     );
 };
 

@@ -5,7 +5,6 @@ import {Routes, Route} from 'react-router-dom'
 import Shop from './routes/shop/shop.component'
 import Authentication from './routes/authentication/authentication.component'
 
-
 const App= () => {
   return (
   // extending the browser router properties into the subclasses here
