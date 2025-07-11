@@ -3,7 +3,8 @@
 import { getAuth, 
     signInWithRedirect, 
     signInWithPopup, 
-    GoogleAuthProvider, 
+    GoogleAuthProvider,
+    signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     FacebookAuthProvider} from "firebase/auth";
 // Import the functions you need from the SDKs you need
@@ -13,7 +14,6 @@ import { initializeApp } from "firebase/app";
 
 //FIRESTORE STUFF
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-import { useTransition } from "react";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -95,7 +95,13 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
 
 //creating these functions asynchronously inside of firebase
 export const createAuthUserWithEmailAndPassword = async(email, password) => {
-
     if(!email || !password) return;
     return await createUserWithEmailAndPassword(auth, email, password);
 };
+
+export const signInAuthUserWithEmailAndPassword = async(email, password) =>
+    {
+        if(!email || !password) return;
+        return await signInWithEmailAndPassword(auth, email, password);
+        
+    };

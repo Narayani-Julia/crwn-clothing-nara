@@ -3,7 +3,7 @@ import Navigation from './routes/navigation/navigation.component'
 //Assembling the routing for the application: 
 import {Routes, Route} from 'react-router-dom'
 import Shop from './routes/shop/shop.component'
-import SignIn from './routes/sign-in/sign-in.component'
+import Authentication from './routes/authentication/authentication.component'
 
 
 const App= () => {
@@ -21,7 +21,7 @@ const App= () => {
     - need to use an Outlet in order to implement this
       */}    
     <Route path='/shop' element = {<Shop/>}/>
-    <Route path='signIn' element={<SignIn/>}/>
+    <Route path='auth' element={<Authentication/>}/>
     </Route>
   </Routes>
 )}

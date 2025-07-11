@@ -42,7 +42,7 @@ const SignUpForm = () =>
         catch(error)
         {
             console.log('user creation encountered an error', error);
-        if(error.code == 'auth/email-already-in-use') //this is a good sign when as a coder you recieve this because it means its logging in the user correctly usually
+        if(error.code === "auth/email-already-in-use") //this is a good sign when as a coder you recieve this because it means its logging in the user correctly usually
          {alert("Email already in use");}
         else{console.log('user creation encountered an error', error);}
             console.log('error creation of user', error.message);
@@ -68,5 +68,4 @@ const SignUpForm = () =>
         </div>
     );
 }
-
 export default SignUpForm;

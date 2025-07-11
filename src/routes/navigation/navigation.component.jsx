@@ -18,7 +18,7 @@ const Navigation = () =>{
     <div className = 'nav-links-container'>
         {/* Correctly reference the right link based on the BrowswerRouter. Works like an a tag */}
         <Link className = 'nav-link' to='/shop'>SHOP</Link>
-        <Link to="signIn">Sign In</Link>
+        <Link to="auth">Sign In</Link>
     </div>
   </div>
     <Outlet />
