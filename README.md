@@ -42,6 +42,47 @@ Routes Component to define which component is linked to each url
 Link as the buttons to send to each url
 Create route folder for seperation of concerns
 
+# Adding New Link
+- Add A navigation component
+- Add a Link component
+- Add the component itself to the routes folder, and youre pretty set!
+
+# Firebase
+Go to clone in the website in order to create a Firebase DB
+No need for Firebase Analytics since it makes using a DB more complicated
+Firestore Database is where you will find the instance of your DB
+RealTime is older DB so no need to use it
+Install firebase onto your application
+
+# install firebase
+yarn add firebase
+go to the db on the firebase website and create a webapp <>
+get the firebase config from the generated links given from the website
+
+
+# Firestore stores data like: 
+
+Collection is the file related to type of data stored
+document is the individdual user
+data - sstuff related to specific data
+
+Shoes = Collection
+    Nike = Document
+        data
+    Adidas = Document
+        data
+
+# Creating the database
+
+Websitre => database => Build => Firestore database = > create database => production mode
+
+Go to Rules: Change line to: allow read, write: if true; and then hit Publish
+
+
+
+
+
+
 
 # How to fork and clone
 One quick note about cloning this project. If you wish to make commits and push your own code, you'll need to fork the project first. Forking allows you to have your own copy of this repository by adding a duplicate version in your own profile!
