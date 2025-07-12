@@ -26,6 +26,7 @@ const SignInForm = () =>
     const logInWithGoogle = async() => {
     //Youre gonna get a response but we wanna destructure it in order to pass it to the firebase
     const response = await signInWithGooglePopup();
+    setCurrentUser(user);
     const userDocRef = await createUserDocumentFromAuth(response.user);
     };
 
