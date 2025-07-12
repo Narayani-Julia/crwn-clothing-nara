@@ -6,6 +6,9 @@ import Shop from './routes/shop/shop.component'
 import Authentication from './routes/authentication/authentication.component'
 
 const App= () => {
+  //prop drilling: passing in props for components that dont need it, but their child possibly needs it
+  //Context allows React to store data so that components from different parts of the DOM tree can access it
+  
   return (
   // extending the browser router properties into the subclasses here
   <Routes>

@@ -1,31 +1,33 @@
-import { useState } from "react";
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth} from "../../utils/firebase/firebase.utils";
+import { useContext, useState } from "react";
+import { signInWithGooglePopup, 
+    createUserDocumentFromAuth, 
+    signInAuthUserWithEmailAndPassword } 
+    from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss'
+
 import Button from "../button/button-component";
-import { signInWithGooglePopup } from "../../utils/firebase/firebase.utils";
-import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
+import { UserContext } from "../../contexts/user.context";
 const defaultFormFields = {
     email:'',
     password:'',
 };
 
-const logInWithGoogle = async() => {
-    //Youre gonna get a response but we wanna destructure it in order to pass it to the firebase
-    const response = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(response.user);
-};
-
-
 const SignInForm = () =>
 {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {email, password} = formFields;
-    console.log(formFields);
+
+    const {setCurrentUser} = useContext(UserContext);
 
     const resetFormFields = () =>{
         setFormFields(defaultFormFields);
     }
+    const logInWithGoogle = async() => {
+    //Youre gonna get a response but we wanna destructure it in order to pass it to the firebase
+    const response = await signInWithGooglePopup();
+    const userDocRef = await createUserDocumentFromAuth(response.user);
+    };
 
     const handleChange = (event)=>{
         const {name, value} = event.target //gotta be the target
@@ -35,8 +37,8 @@ const SignInForm = () =>
     const handleSubmit = async(event)=>{
         event.preventDefault();
         try{
-            const response = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log(response);
+            const {user} = await signInAuthUserWithEmailAndPassword(email, password);
+            setCurrentUser(user);
             resetFormFields();
         }
         catch(error)
@@ -51,8 +53,6 @@ const SignInForm = () =>
             default: 
                 console.log(error);
             }
-
-            console.log(error.message);
         }
     }
     return (
