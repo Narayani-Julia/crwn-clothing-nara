@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
+import {useState } from "react";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth} from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import './sign-up-form.styles.scss'
 import Button from "../button/button-component";
-import { UserContext } from "../../contexts/user.context";
+//import { UserContext } from "../../contexts/user.context";
 
 const defaultFormFields = {
     displayName:'',
@@ -20,7 +20,8 @@ const SignUpForm = () =>
 
     //This is going to make react re-render the page when there is a new user
     //It wont usually update the DOM, this is where the Virtual DOM comes in hand, there is no need to update the DOM
-    const {setCurrentUser} = useContext(UserContext);
+    //re-rendering means that it will re-reun this entire return statement
+    //const {setCurrentUser} = useContext(UserContext);
     console.log('hit');
 
     const resetFormFields = () =>{
@@ -35,7 +36,7 @@ const SignUpForm = () =>
     const handleSubmit = async(event)=>{
         event.preventDefault();
         //create a user document
-        if(password != confirmPassword){
+        if(password !== confirmPassword){
             alert("passwords do not match");
             return;
         }
@@ -43,7 +44,8 @@ const SignUpForm = () =>
             const {user} = await createAuthUserWithEmailAndPassword(
                 email, 
                 password);            
-            setCurrentUser(user);
+            //setCurrentUser(user);
+            //Store document object
             await createUserDocumentFromAuth(user, 
                 {displayName});
             resetFormFields();

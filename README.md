@@ -78,10 +78,22 @@ Websitre => database => Build => Firestore database = > create database => produ
 
 Go to Rules: Change line to: allow read, write: if true; and then hit Publish
 
+# incorporate Firebase into code
+step 1: create a firebase/utils.js file because you want to keep all of the stuff that directly interacts with the firebase app in one place
 
+step 2: 
 
+# Incorporate User Context"
+import useContext and UserContest in the utils file
 
-
+# EVERY listener has three components: 
+1. next method: called everytime a new event in the stream happens
+- event gets passed to this next function
+- callback recieves that event
+- TLDR: points to the callback
+2. error: when errors occurs
+- network delay, reject this error so that you can react consistently
+3. complete(): when a stream closes, say that there are no more anticipated events
 
 
 # How to fork and clone

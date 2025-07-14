@@ -7,7 +7,7 @@ import { getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signOut,
-    FacebookAuthProvider} from "firebase/auth";
+    onAuthStateChanged} from "firebase/auth";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -33,13 +33,13 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 //different providers will have different ways
 const provider = new GoogleAuthProvider();
-const facebookProvider = new FacebookAuthProvider()
 provider.setCustomParameters({
     //Gotta check the spelling of this right
     prompt: 'select_account', //this comma is actually important for defining key value pairs
 });
 
 //need to have the same authentication for one application
+//keeps track of what user is being signed in rn
 export const auth = getAuth();
 export const signInWithGooglePopup = ()=> signInWithPopup(auth, provider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
@@ -108,3 +108,17 @@ export const signInAuthUserWithEmailAndPassword = async(email, password) =>
     };
 
 export const signOutUser = async() => await signOut(auth);
+//callback is called everytime the state is changed because its listening to the state of the object
+//open AudioListener, it permanently is a listener
+//thus you need to unmount it
+export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+
+//listener has three components
+/*
+1. next method: called everytime a new event in the stream happens
+- event gets passed to this next function
+- callback recieves that event
+- TLDR: points to the callback
+2. error: when errors occurs
+3. complete(): when a stream closes, say that there are no more anticipated events
+*/

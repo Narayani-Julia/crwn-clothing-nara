@@ -10,11 +10,12 @@ import {UserContext} from '../../contexts/user.context';
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 const Navigation = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  //we dont need a setter method for the user because the UseContextListener will handle this for us
+  const { currentUser } = useContext(UserContext);
 
   const signOutHandler = async ()=>{
-    const res = await signOutUser();
-    setCurrentUser(null);
+    await signOutUser();
+    // setCurrentUser(null);
   };
 
   return(
@@ -28,10 +29,11 @@ const Navigation = () => {
     <div className = 'nav-links-container'>
         {/* Correctly reference the right link based on the BrowswerRouter. Works like an a tag */}
         <Link className = 'nav-link' to='/shop'>SHOP</Link>
-        {currentUser?
-            (<span className = 'nav-link' onClick={signOutHandler}>SIGN OUT</span>):(
-                      <Link className="nav-link" to="auth">Sign In</Link>
-          )}
+        {currentUser ?
+        //creating another function to handle the async of the auth function
+            (<span className = 'nav-link' onClick={signOutHandler}>SIGN OUT</span>):
+            (<Link className="nav-link" to="auth">Sign In</Link>)
+        }
     </div>
   </div>
   <Outlet />

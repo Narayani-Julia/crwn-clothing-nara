@@ -1,13 +1,14 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { signInWithGooglePopup, 
     createUserDocumentFromAuth, 
-    signInAuthUserWithEmailAndPassword } 
+    signInAuthUserWithEmailAndPassword,
+ } 
     from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss'
 
 import Button from "../button/button-component";
-import { UserContext } from "../../contexts/user.context";
+//import { UserContext } from "../../contexts/user.context";
 const defaultFormFields = {
     email:'',
     password:'',
@@ -18,7 +19,9 @@ const SignInForm = () =>
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {email, password} = formFields;
 
-    const {setCurrentUser} = useContext(UserContext);
+    //No need for a setCurrent user because we are using a listener that handles this for us
+    //Also no need for the useContext imports either
+    //const {setCurrentUser} = useContext(UserContext);
 
     const resetFormFields = () =>{
         setFormFields(defaultFormFields);
@@ -26,20 +29,21 @@ const SignInForm = () =>
     const logInWithGoogle = async() => {
     //Youre gonna get a response but we wanna destructure it in order to pass it to the firebase
     const response = await signInWithGooglePopup();
-    setCurrentUser(user);
-    const userDocRef = await createUserDocumentFromAuth(response.user);
+    //setCurrentUser(response.user);
+    //This is not needed to be done here anymore. We can do it during the listener function
+    //const userDocRef = await createUserDocumentFromAuth(response.user);
     };
 
     const handleChange = (event)=>{
         const {name, value} = event.target //gotta be the target
-        setFormFields({... formFields, [name]: value});
+        setFormFields({...formFields, [name]: value});
     }
 
     const handleSubmit = async(event)=>{
         event.preventDefault();
         try{
             const {user} = await signInAuthUserWithEmailAndPassword(email, password);
-            setCurrentUser(user);
+            //setCurrentUser(user);
             resetFormFields();
         }
         catch(error)
@@ -50,6 +54,9 @@ const SignInForm = () =>
                 break //says if one of the cases are true, you dont need to check for other conditions
             case "auth/user-not-found":
                 alert('no such user found');
+                break
+            case "auth/popup-closed-by-user":
+                alert('not logged in');
                 break
             default: 
                 console.log(error);
