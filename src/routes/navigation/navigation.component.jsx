@@ -7,16 +7,19 @@ import {ReactComponent as CrwnLogo} from '../../assets/crown.svg'
 import './navigation.styles.scss'
 import {useContext} from 'react'
 import {UserContext} from '../../contexts/user.context';
+import { CartContext } from "../../contexts/cart.context";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
-
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 const Navigation = () => {
   //we dont need a setter method for the user because the UseContextListener will handle this for us
   const { currentUser } = useContext(UserContext);
+  const { isCartOpen } = useContext(CartContext);
 
   const signOutHandler = async ()=>{
     await signOutUser();
     // setCurrentUser(null);
-  };
+  }; 
 
   return(
   //Should be the / component since it is supposed to be displayed all the time 
@@ -34,7 +37,9 @@ const Navigation = () => {
             (<span className = 'nav-link' onClick={signOutHandler}>SIGN OUT</span>):
             (<Link className="nav-link" to="auth">Sign In</Link>)
         }
+    <CartIcon/>
     </div>
+    {isCartOpen && <CartDropdown/>}
   </div>
   <Outlet />
 </>
