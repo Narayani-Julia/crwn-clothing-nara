@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 //This is the generic routers, leverages the URL and holds the history of the browser, bahaves like a component
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './contexts/user.context';
-import { ProductsProvider } from './contexts/products.context';
+import { CategoriesProvider } from './contexts/categories.context';
 import { CartProvider } from './contexts/cart.context';
 
 ReactDOM.render(
@@ -15,11 +15,11 @@ ReactDOM.render(
     <BrowserRouter>
     {/* Scope of storage for User provider */}
     <UserProvider> 
-      <ProductsProvider>
+      <CategoriesProvider>
         <CartProvider>
         <App />
         </CartProvider>
-      </ProductsProvider>
+      </CategoriesProvider>
     </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
