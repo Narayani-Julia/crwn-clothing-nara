@@ -4,6 +4,7 @@ import Navigation from './routes/navigation/navigation.component'
 import {Routes, Route} from 'react-router-dom'
 import Shop from './routes/shop/shop.component'
 import Authentication from './routes/authentication/authentication.component'
+import Checkout from './routes/checkout/checkout.component'
 
 const App= () => {
   //prop drilling: passing in props for components that dont need it, but their child possibly needs it
@@ -24,6 +25,7 @@ const App= () => {
       */}    
     <Route path='/shop' element = {<Shop/>}/>
     <Route path='auth' element={<Authentication/>}/>
+    <Route path='checkout' element={<Checkout/>}/>
     </Route>
   </Routes>
 )}

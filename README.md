@@ -117,3 +117,8 @@ context is used as a glorified component that gives access to some data
 # When is defining key neccassary?
 - Inside a map()
 - when there are mutiple div inside an outer div
+
+# Coding notes
+- map
+  has to return something inside of it like 
+  .map(()=>()) orr .map(()=>{;return();})

@@ -6,8 +6,8 @@ import { signInWithGooglePopup,
     from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss'
-
 import Button from "../button/button-component";
+import { useNavigate } from "react-router-dom";
 //import { UserContext } from "../../contexts/user.context";
 const defaultFormFields = {
     email:'',
@@ -18,7 +18,7 @@ const SignInForm = () =>
 {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {email, password} = formFields;
-
+    const navigate = useNavigate();
     //No need for a setCurrent user because we are using a listener that handles this for us
     //Also no need for the useContext imports either
     //const {setCurrentUser} = useContext(UserContext);
@@ -32,6 +32,7 @@ const SignInForm = () =>
     //setCurrentUser(response.user);
     //This is not needed to be done here anymore. We can do it during the listener function
     //const userDocRef = await createUserDocumentFromAuth(response.user);
+    navigate('/');
     };
 
     const handleChange = (event)=>{
@@ -45,6 +46,7 @@ const SignInForm = () =>
             const {user} = await signInAuthUserWithEmailAndPassword(email, password);
             //setCurrentUser(user);
             resetFormFields();
+            navigate('/');
         }
         catch(error)
         {   
