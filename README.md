@@ -139,3 +139,6 @@ use NavigationContainer to keep any stuff that you want restricted to those styl
 - wherever you want the component to restrict the styling for: <StyledComponent> </StyledComponent>
 as = 'span' if you want to use the properties of a specific tag
 
+implicit return: () => ();
+explicit return: () => {;;; return();}
+

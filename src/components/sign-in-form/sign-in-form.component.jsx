@@ -6,7 +6,7 @@ import { signInWithGooglePopup,
     from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss'
-import Button from "../button/button-component";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button-component";
 import { useNavigate } from "react-router-dom";
 //import { UserContext } from "../../contexts/user.context";
 const defaultFormFields = {
@@ -77,7 +77,7 @@ const SignInForm = () =>
                 <div className = 'buttons-container'>
                 <Button type="submit">Sign In</Button>
                 {/* Need to change the button type to submit, so that it won't submit the form */}
-                <Button type = "button" buttonType='google' onClick = {logInWithGoogle} >Sign In</Button>
+                <Button type = "button" buttonType={BUTTON_TYPE_CLASSES.google} onClick = {logInWithGoogle} >Sign In</Button>
                 </div>
             </form>
         </div>
