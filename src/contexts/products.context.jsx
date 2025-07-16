@@ -6,7 +6,7 @@ import { createContext, useState } from "react";
 //context should have parallel variables to the value passed in the provider
 export const ProductsContext = createContext({
     products: [],
-    //setProducts: ()=>{}
+    setProducts: ()=>{}
 });
 
 //This is the component

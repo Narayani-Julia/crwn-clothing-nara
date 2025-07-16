@@ -100,7 +100,7 @@ context is used as a glorified component that gives access to some data
 - set up the storage first
 - set up the call
 - need to set up a context(1. provider, 2. value)
--- context set up with a dataset
+-- provider set up with a default dataset
 - initialize the context with reacts createContext
 - exporrt the provider --> needs children so we can pass it in between the product context provider
 -- provider needs a useState for the data
@@ -108,7 +108,12 @@ context is used as a glorified component that gives access to some data
 -- Wrap the provider tags where needed in the <App/> component
 -- which provider depends on which provider, which needs access to what
 -- using a useState for if the data that the provider is based on is something that is connected to a listener
+-- if there are more elements needed to be added, have a another useState for the setter and variable respectively
 
 - # In order to use this data
 -- import context, import useContext
 -- const {data} = useContext(dataContext)
+
+# When is defining key neccassary?
+- Inside a map()
+- when there are mutiple div inside an outer div
