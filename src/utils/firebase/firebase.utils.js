@@ -14,7 +14,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 //FIRESTORE STUFF
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -44,6 +44,40 @@ export const auth = getAuth();
 export const signInWithGooglePopup = ()=> signInWithPopup(auth, provider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
 export const db = getFirestore();
+
+export const addCollectionAndDocuments = async (collectionKey, obectsToAdd)=>{
+    //going to give us the reference to the given collection
+    const collectionRef = collection(db, collectionKey);
+    //transaction: unit of work in a db
+    const batch = writeBatch(db);
+    //need to create a bunch of set methods 
+    obectsToAdd.forEach((object)=>{
+        //2nd param, key of the object
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+        //
+        batch.set(docRef, object);
+    })
+    await batch.commit();
+    console.log('done')
+};
+
+export const getCategoriesAndDocuments = async()=>{
+    const collectionRef = collection(db, 'categories');
+    //object will help you get a snapshot
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    //.docs can get you arrays
+    //reduce 1param: callback for each element, 2param: initial value to concatenate/
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot)=>{
+        const {title, items} = docSnapshot.data();
+        acc[title.toLowerCase()] = items;
+        return acc;
+    }, {});
+
+    return categoryMap;
+};
+
 
 //you want the
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation={}) => {
@@ -113,12 +147,3 @@ export const signOutUser = async() => await signOut(auth);
 //thus you need to unmount it
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
 
-//listener has three components
-/*
-1. next method: called everytime a new event in the stream happens
-- event gets passed to this next function
-- callback recieves that event
-- TLDR: points to the callback
-2. error: when errors occurs
-3. complete(): when a stream closes, say that there are no more anticipated events
-*/
