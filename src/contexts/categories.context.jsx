@@ -16,7 +16,6 @@ export const CategoriesProvider = ({children})=> {
     useEffect(()=>{
         const getCategoriesMap = async() =>{
             const categoryMap = await getCategoriesAndDocuments();
-            console.log(categoryMap);
             setCategoriesMap(categoryMap);
         }
         //In order to call async functions in useEffect, you need to call it after you define it

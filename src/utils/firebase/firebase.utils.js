@@ -58,7 +58,6 @@ export const addCollectionAndDocuments = async (collectionKey, obectsToAdd)=>{
         batch.set(docRef, object);
     })
     await batch.commit();
-    console.log('done')
 };
 
 export const getCategoriesAndDocuments = async()=>{
@@ -88,11 +87,9 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
     //wanna get the data from the response in the Sign In
     //first check if document reference exists
     const userDocRef = doc(db, 'users', userAuth.uid); //parameters: db, collection you wanna reference, identifier's uniqueID
-    console.log(userDocRef);
 
     //Now get the data with the userId
     const userSnapshot = await getDoc(userDocRef);
-    console.log(userSnapshot.exists());
 
     //Check if user data exists
     if(!userSnapshot.exists())

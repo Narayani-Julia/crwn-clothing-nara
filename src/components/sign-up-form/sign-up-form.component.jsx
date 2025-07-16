@@ -22,7 +22,6 @@ const SignUpForm = () =>
     //It wont usually update the DOM, this is where the Virtual DOM comes in hand, there is no need to update the DOM
     //re-rendering means that it will re-reun this entire return statement
     //const {setCurrentUser} = useContext(UserContext);
-    console.log('hit');
 
     const resetFormFields = () =>{
         setFormFields(defaultFormFields);

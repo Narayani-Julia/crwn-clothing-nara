@@ -195,3 +195,12 @@ explicit return: () => {;;; return();}
 npm install --save-dev jest
 - change in package.json:
 "scripts" : {"test": "jest"},
+
+# How to host your website using netlify
+- netlify.com: CI environment, it will actually handle warnings
+- modify the build command to: You need to keep that whitespace in there!
+CI= yarn build
+- You will get a warning when you refresh a page, Solution: Adding Redirects to netlify
+-- this is because of webservers. Accessing a website is accessing a base route, but the resources are stored in the web server, it will send back the web files, including all the libraries and everything. Single page application ==> base route for the /endpoint
+-- since its a single application
+
