@@ -46,6 +46,8 @@ const SignUpForm = () =>
                 password);            
             //setCurrentUser(user);
             //Store document object
+            //One place where the code is not centralized because we want a display name
+            //centralized in terms of using the listener for authentication
             await createUserDocumentFromAuth(user, 
                 {displayName});
             resetFormFields();

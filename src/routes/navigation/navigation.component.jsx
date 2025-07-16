@@ -4,7 +4,7 @@
 import { Outlet, Link } from "react-router-dom";
 //scg logos can expand and not look pixelated, so they are great to use as a logo
 import {ReactComponent as CrwnLogo} from '../../assets/crown.svg'
-import './navigation.styles.scss'
+import {NavigationContainer, LogoContainer, NavLink, NavLinks} from './navigation.styles'
 import {useContext} from 'react'
 import {UserContext} from '../../contexts/user.context';
 import { CartContext } from "../../contexts/cart.context";
@@ -24,23 +24,24 @@ const Navigation = () => {
   return(
   //Should be the / component since it is supposed to be displayed all the time 
   <>
-    <div className = 'navigation'>
+    
+    <NavigationContainer>
     {/* Since Link is like an anchor tag, it means you can wrap it around an object to treat it like an anchor tag */}
-    <Link className ='logo-container' to='/'> 
-    <CrwnLogo className= 'logo' />
-    </Link>
-    <div className = 'nav-links-container'>
+    <LogoContainer to='/'> 
+      <CrwnLogo className= 'logo' />
+    </LogoContainer>
+    <NavLinks>
         {/* Correctly reference the right link based on the BrowswerRouter. Works like an a tag */}
-        <Link className = 'nav-link' to='/shop'>SHOP</Link>
+        <NavLink to='/shop'>SHOP</NavLink>
         {currentUser ?
         //creating another function to handle the async of the auth function
-            (<span className = 'nav-link' onClick={signOutHandler}>SIGN OUT</span>):
-            (<Link className="nav-link" to="auth">Sign In</Link>)
+            (<NavLink as='span' onClick={signOutHandler}>SIGN OUT</NavLink>):
+            (<NavLink to="auth">Sign In</NavLink>)
         }
     <CartIcon/>
-    </div>
+    </NavLinks>
     {isCartOpen && <CartDropdown/>}
-  </div>
+    </NavigationContainer>
   <Outlet />
 </>
     );

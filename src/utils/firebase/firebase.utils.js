@@ -65,7 +65,6 @@ export const getCategoriesAndDocuments = async()=>{
     const collectionRef = collection(db, 'categories');
     //object will help you get a snapshot
     const q = query(collectionRef);
-
     const querySnapshot = await getDocs(q);
     //.docs can get you arrays
     //reduce 1param: callback for each element, 2param: initial value to concatenate/

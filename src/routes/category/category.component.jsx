@@ -17,6 +17,8 @@ const Category = () => {
         setProducts(categoriesMap[category]);
     },[category, categoriesMap]);
     return(
+        <>
+        <h2 className='category-title'>{category.toUpperCase()}</h2>        
         <div className="category-container">
             {/* THIS IS IMPORTANT TO DO because of async calls, product will not be defined immediately */}
             {products &&
@@ -25,6 +27,7 @@ const Category = () => {
                 })
             }
         </div>
+        </>
     );
 };
 export default Category;

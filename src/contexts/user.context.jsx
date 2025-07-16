@@ -16,7 +16,6 @@ export const UserProvider = ({children})=> {
     const value = {currentUser, setCurrentUser};
 
     useEffect(()=>{
-
         //authstatechanges needs to be unmounted but ti actually returns an unsubscribe function to help you unomount the function
         //checks the authentication state when you listen to the listener
         const unsubscribe = onAuthStateChangedListener((user)=> {

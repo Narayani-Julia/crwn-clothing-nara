@@ -122,3 +122,20 @@ context is used as a glorified component that gives access to some data
 - map
   has to return something inside of it like 
   .map(()=>()) orr .map(()=>{;return();})
+
+- if you have components that rely on async code, you need to put in safegaurds: <component> && <component>.display
+
+# Adding Styled Components In SCSS
++ Run the following: yarn add styled-components
++ import styled from 'styled-components'; 
++ rename your .css or scss files to .jsx or .js in your style file
++ export const NavigationContainer = styled.div``
+- could be any style element styled.button, .h2, 
+etc etc
+- For Link: styled(Link)``
+- will forward the styles to the respective components
+- inside the backtiks you can keep your styling
+use NavigationContainer to keep any stuff that you want restricted to those styles
+- wherever you want the component to restrict the styling for: <StyledComponent> </StyledComponent>
+as = 'span' if you want to use the properties of a specific tag
+
