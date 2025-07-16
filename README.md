@@ -138,10 +138,60 @@ etc etc
 use NavigationContainer to keep any stuff that you want restricted to those styles
 - wherever you want the component to restrict the styling for: <StyledComponent> </StyledComponent>
 as = 'span' if you want to use the properties of a specific tag
+- instead of sass variables:
+$sub-color: grey;
+you would do: const subcolor = 'grey';
+- instead of sass @mixin:
+const shrinkLabelStyles = css` ... ${subColor}`
+-Want to define things by seeing which things are needed later, need to define dependencies first
+
 
 # Targetinig different styled components within each other as selectors
 - ${}{}
 - Has to be initialized before accessing it, otherwise error
 implicit return: () => ();
 explicit return: () => {;;; return();}
+`${variable}`
 
+
+# Testing in React
+- npm run tests
+
+#Types of Testing:
+- unit testing: logic of functions, individual functions. pure functions
+- Integration Tests: checks the way things are connected. contract = connection between things. eg: server and db. these are slow/brittle
+- automation tests: testing real life scenarios, design robots who do this for you. ui tests. aka &2& tests
+-- hardest to set up
+--eg: nightwatch, cypress, testcafe, nightmare
+-webdriver.io good documentation
+-testcafe: no cross browser, all tools in on
+-nightmare : really simple ways to automate, also webscraping
+
+# Testing Needs: 
+- Testing Library: Scaffolding, Building structures
+-- top three libraries for this: Jasmine, Jest, Mocha
+- Assertion Library: assertion functions
+-- jasmine, chai, jest
+- Test Runner: npm run test
+-- jasmine, jest, mocha, karma.js(browser)
+-- browser: reduces overhead, pupeteer by google : headless version of browser
+-- jsmon: fake version of dom
+- Mock Spies and Stubs
+-- mocks/stubs: fake function to test contracts
+-- spies: shows how many times a fucntion is called
+- Code Coverage
+--- Istanbul library
+-- shows % of code that is being tested, uncovered lines
+
+# Testing 101:
+- create project folder
+- mkdir test
+- cd test
+- run to create package: npm init -y
+- create script.js file: touch script.js
+- open the file in whatever text editor you like: sublime . or code .
+- run: npm install jest
+(assumes --save as a dependency)
+npm install --save-dev jest
+- change in package.json:
+"scripts" : {"test": "jest"},
