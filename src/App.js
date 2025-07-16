@@ -23,9 +23,13 @@ const App= () => {
     parent component definition.
     - need to use an Outlet in order to implement this
       */}    
-    <Route path='/shop' element = {<Shop/>}/>
-    <Route path='auth' element={<Authentication/>}/>
-    <Route path='checkout' element={<Checkout/>}/>
+
+      {/* 
+      in a route '/*' means match ANYTHING that has this route, render this component either way
+      */}
+      <Route path='/shop/*' element = {<Shop/>}/>
+      <Route path='auth' element={<Authentication/>}/>
+      <Route path='checkout' element={<Checkout/>}/>
     </Route>
   </Routes>
 )}
