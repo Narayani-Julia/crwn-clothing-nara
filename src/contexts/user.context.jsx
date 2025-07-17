@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useReducer } from "react";
 import { onAuthStateChangedListener, createUserDocumentFromAuth } from "../utils/firebase/firebase.utils";
-import {  } from "../utils/firebase/firebase.utils";
+import { createAction } from "../utils/reducer/reducer.utils";
 import { getDefaultNormalizer } from "@testing-library/react";
 //Two parts to create a context:
 // 1. create the storage: UserContext
@@ -43,7 +43,7 @@ export const UserProvider = ({children})=> {
     console.log(currentUser);
     const setCurrentUser = (user)=>
     {
-        dispatch({type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user});
+        dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user));
     }
 
     useEffect(()=>{

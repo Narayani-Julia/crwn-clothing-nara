@@ -2,6 +2,7 @@
 import { createContext, useState, useEffect, use } from "react";
 //import { addCollectionAndDocuments } from '../utils/firebase/firebase.utils.js';
 import { getCategoriesAndDocuments } from '../utils/firebase/firebase.utils.js';
+import { createAction } from "../utils/reducer/reducer.utils.js";
 
 //Create context needs two parameters, pass the default value for create Context
 //actual value tht you want to access

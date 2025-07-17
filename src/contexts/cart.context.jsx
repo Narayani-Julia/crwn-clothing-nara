@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState, useReducer } from "react";
+import { createAction } from "../utils/reducer/reducer.utils.js";
 
 const addCartItem = (cartItems, productToAdd) => {
     //find if container contains productToAdd
@@ -47,13 +48,13 @@ const cartReducer = (state, action) => {
         case CART_ACTION_TYPES.SET_CART_ITEMS:
             return {
                 ...state, //old state
-                ...payload //updating with whatever is the new value
-            }
+                ...payload, //updating with whatever is the new value
+            };
         case CART_ACTION_TYPES.SET_IS_CART_OPEN:
             return{
                 ...state, 
                 isCartOpen: payload,
-            }
+            };
         default: 
             throw new Error(`unhandled type of ${type} in cartReducer`);
     }
@@ -90,10 +91,10 @@ export const CartProvider = ({children})=>
             (total, cartItem)=> total+cartItem.quantity*cartItem.price, 0
         );
 
-        dispatch({type: CART_ACTION_TYPES.SET_IS_CART_OPEN, 
-            payload: {cartItems: newCartItems, 
+        dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEMS, 
+             {cartItems: newCartItems, 
                 cartTotal: newCartTotal, 
-                cartQty: newCartQty}});
+                cartQty: newCartQty}));
     };
 
     const addItemToCart = (productToAdd)=>{
@@ -108,7 +109,8 @@ export const CartProvider = ({children})=>
     };
     const setIsCartOpen = (bool)=>
     {
-        dispatch({type: CART_ACTION_TYPES.SET_IS_CART_OPEN, payload: bool});
+        dispatch(
+            createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, bool));
     };
 
 
