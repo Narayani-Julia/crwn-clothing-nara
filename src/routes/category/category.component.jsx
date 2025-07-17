@@ -9,9 +9,9 @@ import { selectCategoriesMap } from '../../store/categories/category.selector';
 const Category = () => {
     //useParams will get the :category from the Route
     const {category} = useParams();
+    console.log("render/re-rendering category component");
     const categoriesMap = useSelector(selectCategoriesMap);
     const [products, setProducts] = useState(categoriesMap[category]);
-
     //To prevent it from re-rendering everytime
     useEffect(()=>{
         setProducts(categoriesMap[category]);
