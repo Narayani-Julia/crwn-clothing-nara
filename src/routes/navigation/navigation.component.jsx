@@ -1,14 +1,13 @@
 
 //In order to tell the parent component where the child Routes need to be displayed wrt to the parent component
 //Create a top level navigation in order to do this
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 //scg logos can expand and not look pixelated, so they are great to use as a logo
 import {ReactComponent as CrwnLogo} from '../../assets/crown.svg'
 import {NavigationContainer, LogoContainer, NavLink, NavLinks} from './navigation.styles'
 import {useContext} from 'react'
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
-import {UserContext} from '../../contexts/user.context';
 import { CartContext } from "../../contexts/cart.context";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
@@ -21,13 +20,11 @@ const Navigation = () => {
 
   const signOutHandler = async ()=>{
     await signOutUser();
-    // setCurrentUser(null);
   }; 
 
   return(
   //Should be the / component since it is supposed to be displayed all the time 
-  <>
-    
+  <>    
     <NavigationContainer>
     {/* Since Link is like an anchor tag, it means you can wrap it around an object to treat it like an anchor tag */}
     <LogoContainer to='/'> 
