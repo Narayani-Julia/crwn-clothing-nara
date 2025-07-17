@@ -204,3 +204,53 @@ CI= yarn build
 -- this is because of webservers. Accessing a website is accessing a base route, but the resources are stored in the web server, it will send back the web files, including all the libraries and everything. Single page application ==> base route for the /endpoint
 -- since its a single application
 
+# Redirect file
+/* means every page under this base route
+/index.html is what react creates. We're sending the page to everysingle route
+200 is success code
+
+# Reducer
+- Action{type: string, payload:any}
+- type: "TOGGLE_CART_IS_OPEN" //Clear identifier of what is the action
+- payload is optional, it's like the parameters that are needed to change the useState variables
+- reducers returns an object
+- reducers make more sense for bigger objects, bigger payloads. Smaller objects can use useState instead. Very useful when a change reflects on a bunch of other variables
+- reducers store readable objects only
+- reducers should not store any business logic
+
+# Using reducer:
++ import useReducer
++ Think of the shape of the final output. Create INITIAL_STATE object first. Store relevant readable objects
++ Make the reducer. Reducer should have:
+- type
+- payload
+- syntax: const <ReducerName> = (state, action) => { 
+  const {type, payload} = action;
+  switch(type){
+    case 
+    default: throw new Error(`unhandled type of ${type} in cartReducer`)
+  }
+};
+
+Now think about how to divide the logic and the reducer code. 
+
++ Introduce a helper function in the component to handle the updates for the Reducer values. Use this hlper function wherever you are trying to set the values of the useState variables. At the end of this function, 
+dispatch(type: "SET_CART_ITEMS", payload: {cartItem: newCartItems, cartTotal:newCartTotal, cartCount: newCartCount});
+This function should have the stuff you would write in useEffect (how would you recalculate values)
++ const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
+
+
+# Redux
+- Redux will wrap around the entire application unlike Contexts
+- AKA global state management
+- singular dispatch
+- concept: singular source of truth
+- YOU NEED TO CHOOSE BETWEEN REDUX AND CONTEXT
+yarn add redux react-redux redux-logger
+react-redux: dispatch and pull
+redux-logger: tool helps you find out whats happening. good for debugging
+
+# Setting up redux
++ Set up a store folder
++ create a file: store.js : this is where state lives, we recieve actions, dispatch them into reducers to update the state
+

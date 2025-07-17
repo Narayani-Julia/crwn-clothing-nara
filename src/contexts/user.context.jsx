@@ -1,6 +1,7 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useReducer } from "react";
 import { onAuthStateChangedListener, createUserDocumentFromAuth } from "../utils/firebase/firebase.utils";
 import {  } from "../utils/firebase/firebase.utils";
+import { getDefaultNormalizer } from "@testing-library/react";
 //Two parts to create a context:
 // 1. create the storage: UserContext
 // 2. provider: the component to access this storage
@@ -11,9 +12,39 @@ export const UserContext = createContext({
     setCurrentUser: ()=> null,
 })
 
+export const USER_ACTION_TYPES = {
+    SET_CURRENT_USER: 'SET_CURRENT_USER',
+};
+
+const userReducer = (state, action) =>{
+    console.log(action);
+    console.log("dispatch");
+    const {type, payload} = action;
+    switch(type){
+        case 'SET_CURRENT_USER':
+            return {
+                ...state,
+                currentUser: payload };
+        
+        default:
+            throw new Error(`Unhandled type ${type} in userReducer`);
+    }
+};
+
+const INITIAL_STATE = {
+    currentUser: null
+};
+
 export const UserProvider = ({children})=> {
-    const[currentUser, setCurrentUser] = useState(null);
-    const value = {currentUser, setCurrentUser};
+    //const[currentUser, setCurrentUser] = useState(null);
+    //const value = {currentUser, setCurrentUser};
+    //state: current state; dispatch: pass this function an action object
+    const [{currentUser}, dispatch] = useReducer(userReducer, INITIAL_STATE);
+    console.log(currentUser);
+    const setCurrentUser = (user)=>
+    {
+        dispatch({type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user});
+    }
 
     useEffect(()=>{
         //authstatechanges needs to be unmounted but ti actually returns an unsubscribe function to help you unomount the function
@@ -26,6 +57,6 @@ export const UserProvider = ({children})=> {
         })
         return unsubscribe;
     },[]);
-
+    const value = {currentUser};
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 };
