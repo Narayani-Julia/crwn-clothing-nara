@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import { onAuthStateChangedListener } from './utils/firebase/firebase.utils'
 import { createUserDocumentFromAuth } from './utils/firebase/firebase.utils'
 import { setCurrentUser } from './store/user/user.action'
+
 const App= () => {
   //prop drilling: passing in props for components that dont need it, but their child possibly needs it
   //Context allows React to store data so that components from different parts of the DOM tree can access it
@@ -22,10 +23,11 @@ const App= () => {
                 createUserDocumentFromAuth(user);
             }
             dispatch(setCurrentUser(user));
-        })
+        });
         return unsubscribe;
     },[dispatch]);
 
+    try{
   return (
   // extending the browser router properties into the subclasses here
   <Routes>
@@ -48,6 +50,12 @@ const App= () => {
       <Route path='checkout' element={<Checkout/>}/>
     </Route>
   </Routes>
-)}
-
+      );
+      }
+catch(err)
+  {
+    console.error('Caught error in app.js:', err);
+    return(<></>);
+  }
+};
 export default App;

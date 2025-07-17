@@ -67,13 +67,14 @@ export const getCategoriesAndDocuments = async()=>{
     const querySnapshot = await getDocs(q);
     //.docs can get you arrays
     //reduce 1param: callback for each element, 2param: initial value to concatenate/
-    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot)=>{
-        const {title, items} = docSnapshot.data();
-        acc[title.toLowerCase()] = items;
-        return acc;
-    }, {});
-
-    return categoryMap;
+    const categoryMap = querySnapshot
+    return querySnapshot.doc.map((docSnapshot) => docSnapshot.doc());
+    //     .reduce((acc, docSnapshot)=>{
+    //     const {title, items} = docSnapshot.data();
+    //     acc[title.toLowerCase()] = items;
+    //     return acc;
+    // }, {});
+    //return categoryMap;
 };
 
 

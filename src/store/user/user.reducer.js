@@ -1,11 +1,11 @@
 import { USER_ACTION_TYPES } from "./user.types";
 
-export const INITIAL_STATE = {
+export const USER_INITIAL_STATE = {
     currentUser: null
 };
 
 //Since there is no hook anymore that calls useReducer and passes into it an initial value, you need to pass in a default value here
-export const userReducer = (state = INITIAL_STATE, action={}) =>{
+export const userReducer = (state = USER_INITIAL_STATE, action={}) =>{
     const {type, payload} = action;
     switch(type){
         case USER_ACTION_TYPES.SET_CURRENT_USER:

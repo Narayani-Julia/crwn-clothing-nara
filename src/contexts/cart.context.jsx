@@ -76,7 +76,8 @@ export const CartContext = createContext({
 
 export const CartProvider = ({children})=>
 {
-    const [{cartItems, isCartOpen, cartQty, cartTotal}, dispatch] = useReducer(cartReducer, INITIAL_STATE);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [{cartItems, cartQty, cartTotal}, dispatch] = useReducer(cartReducer, INITIAL_STATE);
 
     const updateCartItemsReducer = (newCartItems) => {
         /*
@@ -107,11 +108,11 @@ export const CartProvider = ({children})=>
     {
         updateCartItemsReducer(deleteItemFromCart(cartItems, productToDelete));
     };
-    const setIsCartOpen = (bool)=>
-    {
-        dispatch(
-            createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, bool));
-    };
+    // const setIsCartOpen = (bool)=>
+    // {
+    //     dispatch(
+    //         createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, bool));
+    // };
 
 
     const value = {
@@ -121,6 +122,7 @@ export const CartProvider = ({children})=>
         removeItemFromCart, 
         clearItemFromCart, 
         cartItems, 
+        cartTotal,
         cartQty};
     return(
         <CartContext.Provider value = {value}>{children}</CartContext.Provider>

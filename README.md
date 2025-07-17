@@ -10,7 +10,13 @@ or:
 npm install
 
 # If reaact-scripts not installed correctly:
+Stop livesharing your webpage when you do this. For some reason this makes an error
 rm -rf node_modules && npm install
+
+or
+rd /s /q node_modules
+del package-lock.json
+npm install
 
 # Git
 git clone <repo>
@@ -258,5 +264,6 @@ redux-logger: tool helps you find out whats happening. good for debugging
 Sometimes you will spend 4 hours looking at code that doesnt work and you won't know why its breaking. Checking your dependencies and seeing if its right might help with this issue
 
 yarn add react-router-dom@6
+yarn add react-redux@7.2.6
 npm ci
 yarn why react

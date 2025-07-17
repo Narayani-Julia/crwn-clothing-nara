@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { CartProvider } from './contexts/cart.context';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-
+try{
 const rootElement = document.getElementById('root');
 ReactDOM.render(
   <React.StrictMode>
@@ -23,7 +23,10 @@ ReactDOM.render(
   </React.StrictMode>,
   rootElement
 );
-
+} catch (err)
+{
+  console.error('Caught error:', err);
+} // This will show the full error object }  
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

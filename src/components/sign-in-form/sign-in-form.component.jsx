@@ -61,7 +61,7 @@ const SignInForm = () =>
                 alert('not logged in');
                 break
             default: 
-                console.log(error);
+                console.log('uncaught error in sign in', error.message);
             }
         }
     }
