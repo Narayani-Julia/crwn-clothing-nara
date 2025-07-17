@@ -239,7 +239,6 @@ dispatch(type: "SET_CART_ITEMS", payload: {cartItem: newCartItems, cartTotal:new
 This function should have the stuff you would write in useEffect (how would you recalculate values)
 + const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
 
-
 # Redux
 - Redux will wrap around the entire application unlike Contexts
 - AKA global state management
@@ -253,4 +252,11 @@ redux-logger: tool helps you find out whats happening. good for debugging
 # Setting up redux
 + Set up a store folder
 + create a file: store.js : this is where state lives, we recieve actions, dispatch them into reducers to update the state
++ yarn add 
 
+# Checking for dependencies
+Sometimes you will spend 4 hours looking at code that doesnt work and you won't know why its breaking. Checking your dependencies and seeing if its right might help with this issue
+
+yarn add react-router-dom@6
+npm ci
+yarn why react

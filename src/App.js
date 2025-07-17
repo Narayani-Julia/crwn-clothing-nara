@@ -5,11 +5,27 @@ import {Routes, Route} from 'react-router-dom'
 import Shop from './routes/shop/shop.component'
 import Authentication from './routes/authentication/authentication.component'
 import Checkout from './routes/checkout/checkout.component'
-
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { onAuthStateChangedListener } from './utils/firebase/firebase.utils'
+import { createUserDocumentFromAuth } from './utils/firebase/firebase.utils'
+import { setCurrentUser } from './store/user/user.action'
 const App= () => {
   //prop drilling: passing in props for components that dont need it, but their child possibly needs it
   //Context allows React to store data so that components from different parts of the DOM tree can access it
-  
+  const dispatch = useDispatch();
+      useEffect(()=>{
+        //authstatechanges needs to be unmounted but ti actually returns an unsubscribe function to help you unomount the function
+        //checks the authentication state when you listen to the listener
+        const unsubscribe = onAuthStateChangedListener((user)=> {
+            if(user){
+                createUserDocumentFromAuth(user);
+            }
+            dispatch(setCurrentUser(user));
+        })
+        return unsubscribe;
+    },[dispatch]);
+
   return (
   // extending the browser router properties into the subclasses here
   <Routes>
