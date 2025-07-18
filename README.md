@@ -256,14 +256,32 @@ react-redux: dispatch and pull
 redux-logger: tool helps you find out whats happening. good for debugging
 
 # Setting up redux
++ yarn add redux react-logger root-reduxer
 + Set up a store folder
 + create a file: store.js : this is where state lives, we recieve actions, dispatch them into reducers to update the state
-+ yarn add 
 + dispatch whenever an action method is called
++ 
+
+# redux-logger
+- helps log stuff onto the console, super nice for debugging
+- 
 
 # Setting up reselect for redux to optimize
 yarn add reselect
 when you download new things, its good to restart your development set-up
+- reselect basically uses memoization underneath the hood
+
+# Setting up redux persist
++ yarn add redux-persist
+
+# Redux DevTools
+- helps look at past states of the redux state
++ get the chrome extension
++ store.js : compose(): 
+```
+const composeEnhacer = (process.env.NODE_ENV !== 'production' && windpw && window__REDUX_EXTENSION_COMPOSE__) || compose;
+```
+
 
 # Checking for dependencies
 Sometimes you will spend 4 hours looking at code that doesnt work and you won't know why its breaking. Checking your dependencies and seeing if its right might help with this issue
