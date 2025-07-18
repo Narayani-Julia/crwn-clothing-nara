@@ -14,6 +14,16 @@ import { rootSaga } from "./root-saga";
 //import monitorReducerEnhancer from './enhancers/monitorReducer'
 const loggerMiddleware = logger;
 
+const sagaMiddleWare = createSagaMiddleware();
+
+//change to 'development' if you want the log during production
+const middleWares = [
+    process.env.NODE_ENV !== 'production' && loggerMiddleware,
+    sagaMiddleWare,
+].filter(Boolean);
+
+const composeEnhacer = (process.env.NODE_ENV !== 'production' && window && window.__REDUX_EXTENSION_COMPOSE__) || compose;
+
 //configuration object
 const persistConfig = {
     key: 'root',
@@ -22,22 +32,13 @@ const persistConfig = {
     whitelist: ['cart'],
 }
 
-const sagaMiddleWare = createSagaMiddleware();
-
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-//change to 'development' if you want the log during production
-const middleWares = [
-    process.env.NODE_ENV !== 'production' && loggerMiddleware,
-    sagaMiddleWare,
-].filter(Boolean);
 
 
-sagaMiddleWare.run(rootSaga);
-
-const composeEnhacer = (process.env.NODE_ENV !== 'production' && window && window.__REDUX_EXTENSION_COMPOSE__) || compose;
 const composedEnhancers = composeEnhacer(applyMiddleware(...middleWares));
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
-//
+sagaMiddleWare.run(rootSaga);
+
 export const persistor = persistStore(store);
 //const middlewareEnhancer = applyMiddleware(loggerMiddleware, thunk)
 //const composedEnhancers = compose(middlewareEnhancer, monitorReducerEnhancer)

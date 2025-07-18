@@ -296,17 +296,29 @@ const composeEnhacer = (process.env.NODE_ENV !== 'production' && windpw && windo
 - yarn add thunk
 - check where async behaviour is there in your code that you can move into an action driven flow
 - helps you not need to wait for async functions, but let your code operate based on whether it is in a loading state or not. so show loading and buffering pages
+- recommended to end the function name with Async so it is understandable that this is a thunk: 
+export const fetchCategoriesAsync = () => async(dispatch) => {}
+- dispatch
+- try{
+  await
+  dispatchSuccess
+}
+catch{
+  dispatchFail
+}
+ 
+# Testing thunk
+- await Promise.reject(new Error('new error woops'))
 
 # Note: thunk and persist 
 - you dont need to have both of them for a component because the older persist values will show up for a split second unessaccarily. 
 - choose between the two
 - rather whitelist the reducers that actually need to be held onto
 
-
 # SAGA:
 - fire after the reducers have been updated, 
 - yarn add redux-saga
-- either choose between saga or thunk
+- either choose between saga or thunk. theyre replaceable
 
 # redux-toolkit
 - helps remove boilerplate
