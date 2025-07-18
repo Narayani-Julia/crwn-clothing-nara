@@ -12,9 +12,9 @@ const Shop = () =>{
         const getCategoriesMap = async() => {
             const categoriesArray = await getCategoriesAndDocuments('categories');
             console.log(categoriesArray);
-            setCategories(categoriesArray);
+            dispatch(setCategories(categoriesArray));
         };
-        dispatch(getCategoriesMap());
+        getCategoriesMap();
         }, []);
 
         

@@ -12,9 +12,8 @@ export const userReducer = (state = USER_INITIAL_STATE, action={}) =>{
             return {
                 ...state,
                 currentUser: payload };
-        
         default: //need to return the default state. apparently because all reducers use the same dispatch function, so at some point there will be a case when there is no change to the code, meaning no re-renders
-            throw state;//new Error(`Unhandled type ${type} in userReducer`);
+            return state;//new Error(`Unhandled type ${type} in userReducer`);
     }
 };
 

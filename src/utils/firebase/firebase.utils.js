@@ -45,7 +45,7 @@ export const signInWithGooglePopup = ()=> signInWithPopup(auth, provider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
 export const db = getFirestore();
 
-export const addCollectionAndDocuments = async (collectionKey, obectsToAdd)=>{
+export const addCollectionAndDocuments = async (collectionKey, obectsToAdd, field)=>{
     //going to give us the reference to the given collection
     const collectionRef = collection(db, collectionKey);
     //transaction: unit of work in a db
@@ -67,8 +67,7 @@ export const getCategoriesAndDocuments = async()=>{
     const querySnapshot = await getDocs(q);
     //.docs can get you arrays
     //reduce 1param: callback for each element, 2param: initial value to concatenate/
-    const categoryMap = querySnapshot
-    return querySnapshot.doc.map((docSnapshot) => docSnapshot.doc());
+    return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
     //     .reduce((acc, docSnapshot)=>{
     //     const {title, items} = docSnapshot.data();
     //     acc[title.toLowerCase()] = items;
@@ -110,6 +109,7 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
         }
         catch(error)
         {
+            console.log('error creating the user', error.message)
         }
     }
     return userDocRef;

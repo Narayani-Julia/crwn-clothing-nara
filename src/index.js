@@ -1,33 +1,21 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
-import './index.scss';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-//This is the generic routers, leverages the URL and holds the history of the browser, bahaves like a component
+import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { CartProvider } from './contexts/cart.context';
 import { Provider } from 'react-redux';
+import App from './App';
 import { store } from './store/store';
-try{
+
+import './index.scss';
+
 const rootElement = document.getElementById('root');
-ReactDOM.render(
+
+render(
   <React.StrictMode>
-    {/*  */}
-    <Provider store = {store}>
-    <BrowserRouter>
-        <CartProvider>
-        <App />
-        </CartProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+            <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   rootElement
 );
-} catch (err)
-{
-  console.error('Caught error:', err);
-} // This will show the full error object }  
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

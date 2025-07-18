@@ -7,8 +7,8 @@ import Authentication from './routes/authentication/authentication.component'
 import Checkout from './routes/checkout/checkout.component'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { onAuthStateChangedListener } from './utils/firebase/firebase.utils'
-import { createUserDocumentFromAuth } from './utils/firebase/firebase.utils'
+import { onAuthStateChangedListener, 
+          createUserDocumentFromAuth } from './utils/firebase/firebase.utils'
 import { setCurrentUser } from './store/user/user.action'
 
 const App= () => {
@@ -25,9 +25,8 @@ const App= () => {
             dispatch(setCurrentUser(user));
         });
         return unsubscribe;
-    },[dispatch]);
+    },[]);
 
-    try{
   return (
   // extending the browser router properties into the subclasses here
   <Routes>
@@ -51,11 +50,5 @@ const App= () => {
     </Route>
   </Routes>
       );
-      }
-catch(err)
-  {
-    console.error('Caught error in app.js:', err);
-    return(<></>);
-  }
 };
 export default App;
