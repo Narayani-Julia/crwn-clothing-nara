@@ -315,6 +315,9 @@ catch{
 - choose between the two
 - rather whitelist the reducers that actually need to be held onto
 
+// authstatechanges needs to be unmounted but ti actually returns an unsubscribe function to help you unomount the function
+// checks the authentication state when you listen to the listener
+
 # SAGA:
 - fire after the reducers have been updated, 
 - yarn add redux-saga

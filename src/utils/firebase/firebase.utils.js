@@ -112,8 +112,8 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
             console.log('error creating the user', error.message)
         }
     }
-    return userDocRef;
-    //return userDocRef
+    return userSnapshot; //data lives on the snapshot
+    //return userDocRef; //reference to the data
     //if user data does not exist
     //create a document using the snapshot
 }
@@ -132,11 +132,11 @@ export const createAuthUserWithEmailAndPassword = async(email, password) => {
 };
 
 export const signInAuthUserWithEmailAndPassword = async(email, password) =>
-    {
-        if(!email || !password) return;
-        return await signInWithEmailAndPassword(auth, email, password);
-        
-    };
+{
+    if(!email || !password) return;
+    return await signInWithEmailAndPassword(auth, email, password);
+    
+};
 
 export const signOutUser = async() => await signOut(auth);
 //callback is called everytime the state is changed because its listening to the state of the object
@@ -144,3 +144,21 @@ export const signOutUser = async() => await signOut(auth);
 //thus you need to unmount it
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
 
+//a function defined to wrap onAuthStateChanged inside a promise
+//promise based function call
+export const getCurrentUser = () => {
+    //resolve: positive, sucess in retrieving a value
+    //reject: an error
+    return new Promise((resolve, reject)=>
+    {
+        //we need to unsubscribe the moment we get a value
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            (userAuth) => {
+                unsubscribe(); //need to remove the listener to prevent memory leaks
+                resolve(userAuth);
+            },
+            reject //this parameter has to be a callback that runs when error thrown when trying to fetch user
+        );
+    });
+}

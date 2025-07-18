@@ -8,6 +8,8 @@ import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss'
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button-component";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { emailSignInStart, googleSignInStart } from "../../store/user/user.action";
 //import { UserContext } from "../../contexts/user.context";
 const defaultFormFields = {
     email:'',
@@ -22,17 +24,19 @@ const SignInForm = () =>
     //No need for a setCurrent user because we are using a listener that handles this for us
     //Also no need for the useContext imports either
     //const {setCurrentUser} = useContext(UserContext);
-
+    const dispatch = useDispatch();
     const resetFormFields = () =>{
         setFormFields(defaultFormFields);
     }
     const logInWithGoogle = async() => {
     //Youre gonna get a response but we wanna destructure it in order to pass it to the firebase
-    const response = await signInWithGooglePopup();
-    //setCurrentUser(response.user);
-    //This is not needed to be done here anymore. We can do it during the listener function
-    //const userDocRef = await createUserDocumentFromAuth(response.user);
-    navigate('/');
+        //const response = await signInWithGooglePopup();
+        dispatch(googleSignInStart());
+        
+        //setCurrentUser(response.user);
+        //This is not needed to be done here anymore. We can do it during the listener function
+        //const userDocRef = await createUserDocumentFromAuth(response.user);
+        navigate('/');
     };
 
     const handleChange = (event)=>{
@@ -43,7 +47,8 @@ const SignInForm = () =>
     const handleSubmit = async(event)=>{
         event.preventDefault();
         try{
-            const {user} = await signInAuthUserWithEmailAndPassword(email, password);
+            dispatch(emailSignInStart(email, password));
+            //const {user} = await signInAuthUserWithEmailAndPassword(email, password);
             //setCurrentUser(user);
             resetFormFields();
             navigate('/');

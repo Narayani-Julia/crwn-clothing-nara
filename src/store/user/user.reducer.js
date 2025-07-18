@@ -1,17 +1,21 @@
 import { USER_ACTION_TYPES } from "./user.types";
 
 export const USER_INITIAL_STATE = {
-    currentUser: null
+    currentUser: null,
+    isLoading: false,
+    error: null,
 };
 
 //Since there is no hook anymore that calls useReducer and passes into it an initial value, you need to pass in a default value here
 export const userReducer = (state = USER_INITIAL_STATE, action={}) =>{
     const {type, payload} = action;
     switch(type){
-        case USER_ACTION_TYPES.SET_CURRENT_USER:
+        case USER_ACTION_TYPES.SIGN_IN_SUCCESS:
             return {
                 ...state,
                 currentUser: payload };
+        case USER_ACTION_TYPES.SIGN_IN_FAILED:
+            return {...state, error: payload}
         default: //need to return the default state. apparently because all reducers use the same dispatch function, so at some point there will be a case when there is no change to the code, meaning no re-renders
             return state;//new Error(`Unhandled type ${type} in userReducer`);
     }
