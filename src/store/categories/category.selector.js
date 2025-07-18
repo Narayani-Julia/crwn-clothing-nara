@@ -22,6 +22,11 @@ export const selectCategoriesMap = createSelector(
     }, {}
 ));
 
+export const selectCategoriesIsLoading = createSelector(
+[selectCategoryReducer],
+(categoriesSlice) => categoriesSlice.isLoading
+);
+
 /*
   const dispatch = useDispatch();
       useEffect(()=>{

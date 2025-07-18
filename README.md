@@ -282,6 +282,38 @@ when you download new things, its good to restart your development set-up
 const composeEnhacer = (process.env.NODE_ENV !== 'production' && windpw && window__REDUX_EXTENSION_COMPOSE__) || compose;
 ```
 
+# redux thunk
+- asynch side effects inside redux
+- actions do not need to flow
+- redux bindings: read from the store or dispatch new actions within the actual middleware section of redux
+- components dictate how actions get fired, what they do
+- thunk is a middleware
+- recieves aactions that are functions
+- actions are async passed to thunk, thunk passes that function a dispatch
+- thunks can abstract the logic into themselves
+
+# installing thunk
+- yarn add thunk
+- check where async behaviour is there in your code that you can move into an action driven flow
+- helps you not need to wait for async functions, but let your code operate based on whether it is in a loading state or not. so show loading and buffering pages
+
+# Note: thunk and persist 
+- you dont need to have both of them for a component because the older persist values will show up for a split second unessaccarily. 
+- choose between the two
+- rather whitelist the reducers that actually need to be held onto
+
+
+# SAGA:
+- fire after the reducers have been updated, 
+- yarn add redux-saga
+- either choose between saga or thunk
+
+# redux-toolkit
+- helps remove boilerplate
+- yarn add @reduxjs/toolkit
+
+
+
 
 # Checking for dependencies
 Sometimes you will spend 4 hours looking at code that doesnt work and you won't know why its breaking. Checking your dependencies and seeing if its right might help with this issue

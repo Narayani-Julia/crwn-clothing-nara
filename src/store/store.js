@@ -17,8 +17,9 @@ const persistConfig = {
     key: 'root',
     storage, 
     //wanna keep an array of strings of reducers you dont want to persist, example private info
-    blacklist: ['user']
+    whitelist: ['cart'],
 }
+
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 //change to 'development' if you want the log during production
