@@ -323,6 +323,15 @@ catch{
 - yarn add redux-saga
 - either choose between saga or thunk. theyre replaceable
 
+# Steps for SAGA
+- think about action types you want to listen for
+- create corresponding actions
+- create entry saga function : takeLatest(ACTION_TYPE, generator function)
+- generator function: yield call whatchu need. 
+- make sure ^ it has a
+- yeild put
+- actions > reducers > sagas
+
 # redux-toolkit
 - helps remove boilerplate
 - yarn add @reduxjs/toolkit

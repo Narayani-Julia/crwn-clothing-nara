@@ -5,21 +5,23 @@ import { Outlet } from "react-router-dom";
 //scg logos can expand and not look pixelated, so they are great to use as a logo
 import {ReactComponent as CrwnLogo} from '../../assets/crown.svg'
 import {NavigationContainer, LogoContainer, NavLink, NavLinks} from './navigation.styles'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
+import { signOutStart } from "../../store/user/user.action";
 
 const Navigation = () => {
   //we dont need a setter method for the user because the UseContextListener will handle this for us
   //const { currentUser } = useContext(UserContext);
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen);
-
+  const dispatch = useDispatch();
   const signOutHandler = async ()=>{
-    await signOutUser();
+    return dispatch(signOutStart());
+    //await signOutUser();
   }; 
 
   return(
