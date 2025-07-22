@@ -1,14 +1,19 @@
 // In order to add stripe, you need to add the element + hooks to get the api request and all running
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-
+import { useState } from "react";
 import Button from '../button/button.component'
 import { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import { PaymentFormContainer, FormContainer } from "./payment-form.styles";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { selectCartTotal } from "../../store/cart/cart.selector";
+import { current } from "@reduxjs/toolkit";
 const PaymentForm = () => {
     //We need to make an API request for the payment handler
     const stripe = useStripe();
     const elements = useElements();
-
+    const amount = useSelector(selectCartTotal);
+    const currentUser = useSelector(selectCurrentUser);
     const paymentHandler  = async(e) => {
         e.preventDefault();
         //make sure the two hooks are loaded:
@@ -33,7 +38,7 @@ const PaymentForm = () => {
             payment_method: {
             card: elements.getElement(CardElement),            
             billing_details:{
-                name: 'Nara Archunan',
+                name: currentUser? currentUser.displayName: 'Guest',
             },
         },
     });

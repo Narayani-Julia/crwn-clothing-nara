@@ -370,7 +370,7 @@ git clone <repo url>
 + for stripe you need to import backend libraries to work with it in the functions folder:
 - yarn add stripe dotenv
 
-#netlify cli - like a build server
+#netlify cli - like a build server/ dev server
 - need to cancel your build server in your terminal
 - build: is your yarn start and whatever
 - npm install -g netlify-cli
@@ -381,3 +381,7 @@ git clone <repo url>
 - this now means it is running the functions folder. 
 - you can test it now
 - you need to pass the required values for your function for netlify to understand what youre doing 
+
+
+# Set hidden .env variables to netlify site settings > build and deploy > environment variable
+# Need to add domain into firebase so that google sign works
