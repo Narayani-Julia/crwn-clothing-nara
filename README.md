@@ -337,8 +337,6 @@ catch{
 - yarn add @reduxjs/toolkit
 
 
-
-
 # Checking for dependencies
 Sometimes you will spend 4 hours looking at code that doesnt work and you won't know why its breaking. Checking your dependencies and seeing if its right might help with this issue
 
@@ -346,3 +344,40 @@ yarn add react-router-dom@6
 yarn add react-redux@7.2.6
 npm ci
 yarn why react
+
+# cloning a git repo:
+git clone <repo url>
+
+# Stripe
+- create a stripe account
+- get the secret key and publishable keys
+- install dependencies: 
+@stripe/stripe-js @stripe/react-stripe-js
+
+- import Elements aroun <App/>
+- pass in publishable key here
+- stripe will give you components
+
++ Step One: Register your app to stripe like how you would a provider
+
+# Netlify Serverless Function + API Calls
+- netlify makes it easy to set up serverless functions
+- they utilize aws lambda functions, which is essentially a specific resource on the AWS cloud configuration
++ create a folder in your root called netlify
++ create a folder underneath that called functions
++ netlify looks for this folder and looks for the folder functions and javascript will build these functions for you. 
+- name of the file is the name of the route
++ for stripe you need to import backend libraries to work with it in the functions folder:
+- yarn add stripe dotenv
+
+#netlify cli - like a build server
+- need to cancel your build server in your terminal
+- build: is your yarn start and whatever
+- npm install -g netlify-cli
+- rrun the following commands then
+- netlify: see if you get a list of commands
+- netlify login
+- netlify dev
+- this now means it is running the functions folder. 
+- you can test it now
+- you need to pass the required values for your function for netlify to understand what youre doing 

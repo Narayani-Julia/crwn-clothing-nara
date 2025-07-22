@@ -1,16 +1,10 @@
 import { useState } from "react";
-import { signInWithGooglePopup, 
-    createUserDocumentFromAuth, 
-    signInAuthUserWithEmailAndPassword,
- } 
-    from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss'
-import Button, { BUTTON_TYPE_CLASSES } from "../button/button-component";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { emailSignInStart, googleSignInStart } from "../../store/user/user.action";
-//import { UserContext } from "../../contexts/user.context";
 const defaultFormFields = {
     email:'',
     password:'',
@@ -49,7 +43,6 @@ const SignInForm = () =>
         try{
             dispatch(emailSignInStart(email, password));
             //const {user} = await signInAuthUserWithEmailAndPassword(email, password);
-            //setCurrentUser(user);
             resetFormFields();
             navigate('/');
         }

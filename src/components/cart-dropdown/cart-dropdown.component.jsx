@@ -1,5 +1,5 @@
 import './cart-dropdown.styles.jsx'
-import Button from '../button/button-component';
+import Button from '../button/button.component.jsx';
 import CartItem from '../cart-item/cart-item.component';
 import { useNavigate } from 'react-router-dom';
 import { EmptyCartMessage, CartDropdownContainer, CartItems } from './cart-dropdown.styles.jsx';
