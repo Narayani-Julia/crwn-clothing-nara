@@ -15,6 +15,7 @@ const PaymentForm = () => {
         if (!stripe || !elements){
             return;
         }
+        
         //Testing: 
         //pass in RELATIVE route
         const response = await fetch('/.netlify/functions/create-payment-intent',{
@@ -24,8 +25,31 @@ const PaymentForm = () => {
             },
             body: JSON.stringify({amount:10000})
         }).then((res)=> {return res.json();});
+        const {paymentIntent: {client_secret}} = response;
         console.log(response);
+        
+        //confirm card payment is a function from stripe that lets us pay via cards
+        const payementResult = await stripe.confirmCardPayment(client_secret, {
+            payment_method: {
+            card: elements.getElement(CardElement),            
+            billing_details:{
+                name: 'Nara Archunan',
+            },
+        },
+    });
+     
+
+    if(payementResult.error){
+        alert(payementResult.error);
     }
+
+    else{
+        if(payementResult.paymentIntent.status === 'succeeded')
+        {
+            alert('Payment Successful');
+        }
+    }
+};
 
     return(
         <PaymentFormContainer>
@@ -36,7 +60,7 @@ const PaymentForm = () => {
             <Button buttonType = {BUTTON_TYPE_CLASSES.inverted} > Pay Now </Button>
             </FormContainer>
         </PaymentFormContainer>
-    )
-}
+    );
+};
 
 export default PaymentForm;
