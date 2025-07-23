@@ -1,8 +1,10 @@
 //Selectors has to extrapolate the logic from the functions before
 //selector helsp optimize it be as efficient as useState and useEffect
 import { createSelector } from "reselect";
+import { CartState } from "./cart.reducer";
+import { RootState } from "../store";
 
-const selectCartReducer = state => state.cart;
+const selectCartReducer = (state:RootState):CartState => state.cart;
 
 export const selectCartItems = createSelector(
     [selectCartReducer],

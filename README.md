@@ -385,3 +385,49 @@ git clone <repo url>
 
 # Set hidden .env variables to netlify site settings > build and deploy > environment variable
 # Need to add domain into firebase so that google sign works
+
+
+# async functions always return a value inside a promise ==> Promise<void>
+# Typescript 
+- Check the docs for what yarn statement you need
+- add a tsconfig.json file
+- reducer.utils.js file:
+ - start with what are the types of actions that are created in general ==> Usually action and action with payload
+ - actions are converted to ENUMS
+ - export enum action = {key = 'value'}
+ - reducer => need to extend an action so that we can figure out what specific action that is possible
+ - reducer utils
+ - import AnyAction from redux => its a generic thing that extends as extraProps
+ - category.types > category.action > category.reducer > category.selector > root state is at the end > category.saga
+ - add a matchable to every action creator
+
+ + Go to .types and make the types that are relevant to the reducer
+ + Go to .actions and make a type for all the createAction functions, add types for everything
+ + add withMatcher to all the createAction functions
+ + Go into .reducer and implement the new action creators into the reducer
+ + create readonly type for the INITIAL_STATE
+ + Go into .selector import State and say that the reducer will give you the State
+
++ firebase utils js: create types for the returned value from firebase
++ need to typecast some of the return docs()
++ firebase has types defined for userAuth and AuthListener
++ async functions return a Promise of some type
+
++ in store.ts type RootState = ReturnType<typeof rootReducer>
++ update in all selectors.ts the state to have the type of RootState
++ Add MiddleWare from redux to get the right state
+
+
+## Note: Could not find a declaration file for module 'redux-logger' 
+- Need to install seperate types library
+- yarn add @types/redux-logger
+
+# Redux Saga in Typescript
+yarn add typed-redux-saga/macro
+yarn add --dev babel-plugin-macros
++ change import put from redux-saga/effects to typed-redux-saga
++ change yield => yield* so that it can be handled by the redux-saga library
++ add to tsconfig.json "downlevelIteration": true,
+
++ typescript for styled components:
+yarn add @types/styled

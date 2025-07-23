@@ -1,4 +1,7 @@
-export const loggerMiddleware = (store) => (next) => (action) =>{
+import { Middleware } from "redux";
+import { RootState } from "../store";
+//first param: adding extra stuff to the dispath to extend, 2: rootstate
+export const loggerMiddleware: Middleware<{}, RootState> = (store) => (next) => (action) => {
     if(!action.type){
         return next(action);
     }

@@ -7,14 +7,17 @@ import { getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signOut,
-    onAuthStateChanged} from "firebase/auth";
+    onAuthStateChanged,
+    User,
+    NextOrObserver} from "firebase/auth";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 //FIRESTORE STUFF
-import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs, QueryDocumentSnapshot } from "firebase/firestore";
+import { Category } from "../../store/categories/category.types";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -44,8 +47,11 @@ export const auth = getAuth();
 export const signInWithGooglePopup = ()=> signInWithPopup(auth, provider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
 export const db = getFirestore();
+export type ObjectToAdd = {
+    title: string;
+}
 
-export const addCollectionAndDocuments = async (collectionKey, obectsToAdd, field)=>{
+export const addCollectionAndDocuments = async <T extends ObjectToAdd>(collectionKey: string, obectsToAdd: T[]): Promise<void>=>{
     //going to give us the reference to the given collection
     const collectionRef = collection(db, collectionKey);
     //transaction: unit of work in a db
@@ -60,27 +66,32 @@ export const addCollectionAndDocuments = async (collectionKey, obectsToAdd, fiel
     await batch.commit();
 };
 
-export const getCategoriesAndDocuments = async()=>{
+
+export const getCategoriesAndDocuments = async():Promise<Category[]>=>{
     const collectionRef = collection(db, 'categories');
     //object will help you get a snapshot
     const q = query(collectionRef);
     const querySnapshot = await getDocs(q);
     //.docs can get you arrays
     //reduce 1param: callback for each element, 2param: initial value to concatenate/
-    return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
-    //     .reduce((acc, docSnapshot)=>{
-    //     const {title, items} = docSnapshot.data();
-    //     acc[title.toLowerCase()] = items;
-    //     return acc;
-    // }, {});
-    //return categoryMap;
+    //we do as Category here because we know Firebase is going to give us back a Category object but typescript does not know this
+    return querySnapshot.docs.map((docSnapshot) => docSnapshot.data() as Category);
 };
 
 
-//you want the
-export const createUserDocumentFromAuth = async (userAuth, additionalInformation={}) => {
+export type AdditionalInformation = {
+    displayName?: string;
+}
+export type UserData ={
+    createAt: Date;
+    displayName: string;
+    email: string;
+}
+//Firebase has a datatype User for its userAuth objects as well as QueryDocumentSnapshot<user-definedd-type-here> for typescript users :)
+export const createUserDocumentFromAuth = async (userAuth: User, 
+    additionalInformation={} as AdditionalInformation): Promise<void | QueryDocumentSnapshot<UserData>> => {
 
-    //
+    // Return void in the Promise since we are calling createUserDocumentFromAuth even when there is no user to be returned eg: signing out
     if(!userAuth)
         return;
 
@@ -109,10 +120,10 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
         }
         catch(error)
         {
-            console.log('error creating the user', error.message)
+            console.log('error creating the user', error)
         }
     }
-    return userSnapshot; //data lives on the snapshot
+    return userSnapshot as QueryDocumentSnapshot<UserData>; //data lives on the snapshot. Changing this to use this data using redux-saga
     //return userDocRef; //reference to the data
     //if user data does not exist
     //create a document using the snapshot
@@ -126,12 +137,12 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
 //protecting the front-end application from the stuff underneat here
 
 //creating these functions asynchronously inside of firebase
-export const createAuthUserWithEmailAndPassword = async(email, password) => {
+export const createAuthUserWithEmailAndPassword = async(email: string, password: string) => {
     if(!email || !password) return;
     return await createUserWithEmailAndPassword(auth, email, password);
 };
-
-export const signInAuthUserWithEmailAndPassword = async(email, password) =>
+//typescript infers the return type via these functions so thats why we are not getting an error here. We can check with the typescript compiler whether these are the correct datatypes and they seem to be so yea
+export const signInAuthUserWithEmailAndPassword = async(email: string, password: string) =>
 {
     if(!email || !password) return;
     return await signInWithEmailAndPassword(auth, email, password);
@@ -142,11 +153,12 @@ export const signOutUser = async() => await signOut(auth);
 //callback is called everytime the state is changed because its listening to the state of the object
 //open AudioListener, it permanently is a listener
 //thus you need to unmount it
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+//NextOrObserver<User> firebase given datatype for this listener
+export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback);
 
 //a function defined to wrap onAuthStateChanged inside a promise
 //promise based function call
-export const getCurrentUser = () => {
+export const getCurrentUser = (): Promise<User | null> => {
     //resolve: positive, sucess in retrieving a value
     //reject: an error
     return new Promise((resolve, reject)=>

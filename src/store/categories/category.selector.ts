@@ -1,9 +1,12 @@
 
 import {createSelector} from 'reselect';
+import { CategoriesState } from './category.reducer';
+import { CategoryMap } from './category.types';
+import { RootState } from '../store';
 //input selectors: give us params
 //output selectors
 //gives us back the reducer that is needed
-const selectCategoryReducer = (state) => state.categories;
+const selectCategoryReducer = (state:RootState): CategoriesState => state.categories;
 
 //memoized selector, basically only runs when its the same
 export const selectCategories = createSelector(
@@ -19,7 +22,7 @@ export const selectCategoriesMap = createSelector(
         const {title, items} = category;
         acc[title.toLowerCase()] = items;
         return acc;
-    }, {}
+    }, {} as CategoryMap //This will help cast the selector's return value
 ));
 
 export const selectCategoriesIsLoading = createSelector(
