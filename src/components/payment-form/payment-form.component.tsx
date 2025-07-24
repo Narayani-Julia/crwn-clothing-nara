@@ -1,6 +1,6 @@
 // In order to add stripe, you need to add the element + hooks to get the api request and all running
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Button from '../button/button.component'
 import { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import { PaymentFormContainer, FormContainer } from "./payment-form.styles";
@@ -8,13 +8,15 @@ import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectCartTotal } from "../../store/cart/cart.selector";
 import { current } from "@reduxjs/toolkit";
+import { StripeCardElement } from "@stripe/stripe-js";
 const PaymentForm = () => {
     //We need to make an API request for the payment handler
     const stripe = useStripe();
     const elements = useElements();
     const amount = useSelector(selectCartTotal);
     const currentUser = useSelector(selectCurrentUser);
-    const paymentHandler  = async(e) => {
+    const ifValidCardElement = (card: StripeCardElement | null): card is StripeCardElement => card!== null;
+    const paymentHandler  = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //make sure the two hooks are loaded:
         if (!stripe || !elements){
@@ -32,11 +34,15 @@ const PaymentForm = () => {
         }).then((res)=> {return res.json();});
         const {paymentIntent: {client_secret}} = response;
         console.log(response);
-        
+        const cardData = elements.getElement(CardElement);
+        //cardData === null
+        if(!ifValidCardElement(cardData)) return;
         //confirm card payment is a function from stripe that lets us pay via cards
         const payementResult = await stripe.confirmCardPayment(client_secret, {
             payment_method: {
-            card: elements.getElement(CardElement),            
+                //card cannot be nul
+                
+            card: cardData,            
             billing_details:{
                 name: currentUser? currentUser.displayName: 'Guest',
             },

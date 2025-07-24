@@ -7,9 +7,14 @@ import ProductCard from '../../components/product-card/product-card.component';
 import { selectCategoriesIsLoading, selectCategoriesMap } from '../../store/categories/category.selector';
 import Spinner from '../../components/spinner/spinner.compenent';
 
+type CategoryRouteParams = {
+    category: string;
+}
+
 const Category = () => {
     //useParams will get the :category from the Route
-    const {category} = useParams();
+    //Enforcing that category will alwaays be defined
+    const {category} = useParams<keyof CategoryRouteParams>() as CategoryRouteParams;
     //console.log("render/re-rendering category component");
     const categoriesMap = useSelector(selectCategoriesMap);
     const isLoading = useSelector(selectCategoriesIsLoading);
