@@ -430,4 +430,4 @@ yarn add --dev babel-plugin-macros
 + add to tsconfig.json "downlevelIteration": true,
 
 + typescript for styled components:
-yarn add @types/styled
+yarn add @types/styled-components

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss'
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
@@ -33,12 +33,12 @@ const SignInForm = () =>
         navigate('/');
     };
 
-    const handleChange = (event)=>{
+    const handleChange = (event: ChangeEvent<HTMLInputElement>)=>{
         const {name, value} = event.target //gotta be the target
         setFormFields({...formFields, [name]: value});
     }
 
-    const handleSubmit = async(event)=>{
+    const handleSubmit = async(event: FormEvent<HTMLFormElement>)=>{
         event.preventDefault();
         try{
             dispatch(emailSignInStart(email, password));
@@ -48,7 +48,7 @@ const SignInForm = () =>
         }
         catch(error)
         {   
-        switch(error.code){
+        switch((error as Error).message){
             case "auth/invalid-credential":
                 alert('incorrect password/email');
                 break //says if one of the cases are true, you dont need to check for other conditions
@@ -59,7 +59,7 @@ const SignInForm = () =>
                 alert('not logged in');
                 break
             default: 
-                console.log('uncaught error in sign in', error.message);
+                console.log('uncaught error in sign in', (error as Error).message);
             }
         }
     }
@@ -67,7 +67,8 @@ const SignInForm = () =>
         <div className = 'sign-in-container'>
         <h2>Already have an account?</h2>
         <span>Sign in with your email and password</span>
-            <form onSubmit={handleSubmit}>
+        {/* converting onSubmit to OnSubmit = {(e)=> functionName} so we can see type from e*/}
+            <form onSubmit={(e)=>handleSubmit}>
                 <h1>Sign In With Your Email And Password</h1>
                 
                 <FormInput label="Email" type = 'email' required onChange={handleChange} name="email" value={email}/>

@@ -1,10 +1,9 @@
 import { compose, createStore, applyMiddleware, Middleware} from "redux";
 //createStore is deprecated
-
+import logger from "redux-logger";
 import {persistStore, persistReducer, PersistConfig } from "redux-persist"
 import { rootReducer } from "./root-reducer";
 //local storage
-import logger from "redux-logger";
 import { thunk } from "redux-thunk";
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from "redux-saga";
@@ -20,9 +19,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 const middleWares = [
     process.env.NODE_ENV !== 'production' && loggerMiddleware,
     sagaMiddleWare,
-].filter((middleware)=> middleware !== false);
-
-//: middleware is Middleware => Boolean(middleware));
+].filter(Boolean); //as Middlewa: middleware is Middleware => Boolean(middleware));
 //typescript doesnt know that the filter is removing false values, so it Middleware[] wont have a null type
 
 declare global{
@@ -49,7 +46,7 @@ const persistConfig :ExtendedPersistConfig= {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const composedEnhancers = composeEnhacer(applyMiddleware(...(middleWares as Middleware[])));
+const composedEnhancers = composeEnhacer(applyMiddleware(...middleWares as Middleware[]));
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
 sagaMiddleWare.run(rootSaga);
 

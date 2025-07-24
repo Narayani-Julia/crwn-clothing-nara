@@ -46,13 +46,13 @@ type SetCartItems = ActionWithPayload<CART_ACTION_TYPES.SET_CART_ITEMS, CartItem
 //Creating a function for this new base type:
 export const setCartItems = withMatcher((cartItems: CartItem[]): SetCartItems=> createAction(CART_ACTION_TYPES.SET_CART_ITEMS, cartItems));
 
-export const addItemToCart = withMatcher((cartItems: CartItem[], productToAdd: CategoryItem) : SetCartItems=>{
+export const addItemToCart = (cartItems: CartItem[], productToAdd: CategoryItem) : SetCartItems=>{
         return setCartItems(addCartItem(cartItems, productToAdd));
-    });
-export const removeItemFromCart = withMatcher((cartItems: CartItem[], productToRemove: CartItem) : SetCartItems=>{
+    };
+export const removeItemFromCart = (cartItems: CartItem[], productToRemove: CartItem) : SetCartItems=>{
         return setCartItems(removeCartItem(cartItems, productToRemove));
-    });
+    };
 //BE CAREFUL ABOUT TYPES. Here product to add is a category item. Product to remove and delete is a cartItem
-    export const clearItemFromCart= withMatcher((cartItems: CartItem[], productToDelete: CartItem): SetCartItems=>{
+    export const clearItemFromCart= (cartItems: CartItem[], productToDelete: CartItem): SetCartItems=>{
         return setCartItems(deleteItemFromCart(cartItems, productToDelete));
-    });
+    };
