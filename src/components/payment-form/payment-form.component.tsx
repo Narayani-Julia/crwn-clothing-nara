@@ -7,7 +7,6 @@ import { PaymentFormContainer, FormContainer } from "./payment-form.styles";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectCartTotal } from "../../store/cart/cart.selector";
-import { current } from "@reduxjs/toolkit";
 import { StripeCardElement } from "@stripe/stripe-js";
 const PaymentForm = () => {
     //We need to make an API request for the payment handler
